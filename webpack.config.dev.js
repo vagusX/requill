@@ -11,7 +11,8 @@ module.exports = {
   entry: {
     main: './client/main',
     vendor: [
-      'webpack-hot-middleware/client'
+      'webpack-hot-middleware/client',
+      'quill'
     ]
   },
   output: {
@@ -32,7 +33,8 @@ module.exports = {
       { test: /\.ttf$/, loader: 'url', query: { limit: 100, minetype: 'application/octet-stream', name: fontName } },
       { test: /\.eot$/, loader: 'url', query: { limit: 100, name: fontName } },
       { test: /\.svg$/, loader: 'url', query: { limit: 10000, minetype: 'image/svg+xml', name: fontName } }
-    ]
+    ],
+    noParse: /node_modules\/quill\/dist\/quill\.js/
   },
   postcss: function () {
     return {

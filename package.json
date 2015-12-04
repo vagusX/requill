@@ -16,6 +16,7 @@
   ],
   "author": "vagusX",
   "dependencies": {
+    "quill": "^0.20.1",
     "react": "^0.14.2",
     "react-dom": "^0.14.2"
   },

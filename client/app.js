@@ -1,10 +1,6 @@
 import React from 'react'
-import { Datepicker } from 'antd'
 
-import Button from './components/button'
-import Logo from './components/logo'
-
-import 'antd/lib/index.css'
+import Editor from './components/editor'
 
 import './main.css'
 
@@ -16,9 +12,7 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        <Button tips='Hello seed' />
-        <Logo slogan='React here!' />
-        <Datepicker />
+        <Editor />
       </div>
     )
   }
