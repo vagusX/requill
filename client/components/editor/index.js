@@ -18,6 +18,7 @@ export default class Editor extends React.Component {
     this.getRange = this.getRange.bind(this)
     this.counter = this.counter.bind(this)
     this.destroy = this.destroy.bind(this)
+    this.custom = this.custom.bind(this)
   }
 
   componentDidMount() {
@@ -66,6 +67,7 @@ export default class Editor extends React.Component {
             <span title="Underline" className="ql-format-button ql-underline"></span>
             <span className="ql-format-separator"></span>
             <span title="Strikethrough" className="ql-format-button ql-strike"></span>
+            <button onClick={this.custom}>自定义</button>
           </span>
           <span className="ql-format-group">
             <span title="Link" className="ql-format-button ql-link">
@@ -76,9 +78,20 @@ export default class Editor extends React.Component {
             </span>
           </span>
         </div>
-        <div id='editor' className='ql-container'></div>
+        <div id='editor' className='ql-container'>12345123999123321123</div>
       </div>
     )
+  }
+
+  custom() {
+    this.editor.focus()
+    const range = this.editor.getSelection()
+    const text = this.editor.getText()
+    if (text.indexOf('123') !== -1) {
+      const newText = text.replace(/123/g, 'found')
+      this.editor.setText(newText)
+    }
+    this.editor.setSelection(range)
   }
 
   destroy() {
