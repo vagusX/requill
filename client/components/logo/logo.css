@@ -1,0 +1,16 @@
+.logo {
+  width: 300px;
+  height: 120px;
+  background-image: url('./react.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.slogan {
+  width: 300px;
+  font-size: 20px;
+  color: blue;
+  border: 1px solid #f6f6f6;
+  background: linear-gradient(to right,red,orange,yellow, green, blue,indigo,violet);
+}
