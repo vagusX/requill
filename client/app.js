@@ -2,7 +2,7 @@ import React from 'react'
 
 import Editor from './components/editor'
 
-import './main.css'
+import styles from './main.css'
 
 class App extends React.Component {
   constructor (props) {
@@ -11,7 +11,7 @@ class App extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className={styles.wrapper}>
         <Editor />
       </div>
     )

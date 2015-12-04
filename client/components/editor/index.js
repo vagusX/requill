@@ -11,10 +11,23 @@ export default class Editor extends React.Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      counter: 0
+    }
+    this.handleClick = this.handleClick.bind(this)
+    this.getRange = this.getRange.bind(this)
+    this.counter = this.counter.bind(this)
+    this.destroy = this.destroy.bind(this)
   }
 
   componentDidMount() {
     const configs = {
+      formats: [
+        'bold', 'italic', 'strike',
+        'underline', 'font', 'size',
+        'color', 'background', 'image',
+        'link', 'bullet', 'list', 'align'
+      ],
       modules: {
         'toolbar': {
           container: '#toolbar'
@@ -25,18 +38,83 @@ export default class Editor extends React.Component {
       theme: 'snow'
     }
 
-    this.quill = new Quill('#editor', configs)
+    this.editor = new Quill('#editor', configs)
+    this.editor.focus()
+    this.editor.on('text-change', this.counter)
+    this.editor.addModule('counter', {
+      container: '#counter'
+    })
+  }
+
+  componentWillUnmount() {
+    this.destroy()
   }
 
   render() {
     return (
-      <div className='editor-container'>
+      <div className='ql-container'>
+        <button onClick={this.handleClick}>Get Selection</button>
+        <button onClick={this.destroy}>destroy</button>
+        <button>{this.state.counter}</button>
+        <button id='counter'>0</button>
         <div id='toolbar' className='ql-toolbar'>
-          <button className='ql-bold'>Bold</button>
-          <button className='ql-italic'>Italic</button>
+          <span className="ql-format-group">
+            <span title="Bold" className="ql-format-button ql-bold"></span>
+            <span className="ql-format-separator"></span>
+            <span title="Italic" className="ql-format-button ql-italic"></span>
+            <span className="ql-format-separator"></span>
+            <span title="Underline" className="ql-format-button ql-underline"></span>
+            <span className="ql-format-separator"></span>
+            <span title="Strikethrough" className="ql-format-button ql-strike"></span>
+          </span>
+          <span className="ql-format-group">
+            <span title="Link" className="ql-format-button ql-link">
+            </span>
+            <span className="ql-format-separator">
+            </span>
+            <span title="Image" className="ql-format-button ql-image">
+            </span>
+          </span>
         </div>
-        <div id='editor' className='ql-container'>hello editor@</div>
+        <div id='editor' className='ql-container'></div>
       </div>
     )
   }
+
+  destroy() {
+    this.editor.destroy()
+  }
+
+  counter() {
+    const length = this.editor.getLength()
+    this.setState({
+      counter: length - 1
+    })
+  }
+
+  handleClick() {
+   this.getRange()
+  }
+
+  getRange() {
+    this.editor.focus()
+    let range = this.editor.getSelection()
+    console.log(range)
+  }
 }
+
+class Counter {
+  constructor(quill, opts) {
+    this.quill = quill
+    this.opts = opts
+    this.container = document.querySelector(opts.container)
+    quill.on('text-change', this.counter.bind(this))
+  }
+
+  counter() {
+    const text = this.quill.getText()
+    this.container.innerHTML = text.length - 1
+  }
+}
+
+Quill.registerModule('counter', Counter)
