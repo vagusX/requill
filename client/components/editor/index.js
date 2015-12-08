@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Quill from 'quill'
+import Toolbar from './toolbar'
+import configs from './config'
 
 import 'quill/dist/quill.snow.css'
 
@@ -54,30 +56,14 @@ export default class Editor extends React.Component {
   render() {
     return (
       <div className='ql-container'>
-        <button onClick={this.handleClick}>Get Selection</button>
-        <button onClick={this.destroy}>destroy</button>
-        <button>{this.state.counter}</button>
-        <button id='counter'>0</button>
-        <div id='toolbar' className='ql-toolbar'>
-          <span className="ql-format-group">
-            <span title="Bold" className="ql-format-button ql-bold"></span>
-            <span className="ql-format-separator"></span>
-            <span title="Italic" className="ql-format-button ql-italic"></span>
-            <span className="ql-format-separator"></span>
-            <span title="Underline" className="ql-format-button ql-underline"></span>
-            <span className="ql-format-separator"></span>
-            <span title="Strikethrough" className="ql-format-button ql-strike"></span>
-            <button onClick={this.custom}>自定义</button>
-          </span>
-          <span className="ql-format-group">
-            <span title="Link" className="ql-format-button ql-link">
-            </span>
-            <span className="ql-format-separator">
-            </span>
-            <span title="Image" className="ql-format-button ql-image">
-            </span>
-          </span>
+        <div>
+          <button onClick={this.handleClick}>Get Selection</button>
+          <button onClick={this.destroy}>destroy</button>
+          <button onClick={this.custom}>custom</button>
+          <button>{this.state.counter}</button>
+          <button id='counter'>0</button>
         </div>
+        <Toolbar id='toolbar' className='ql-toolbar' configs={configs} />
         <div id='editor' className='ql-container'>12345123999123321123</div>
       </div>
     )
