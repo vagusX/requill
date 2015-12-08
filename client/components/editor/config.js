@@ -14,53 +14,24 @@ const colorsArray = [
 ]
 
 const defaultColors = colorsArray.map( color => {
-  return { label: '', value: color }
+  return { value: color }
 })
 
-const blocks = {
-  tag: 'blocks',
-  items: [
-    { type: 'bullet', label: 'Bullet' },
-    { type: 'separator' },
-    { type: 'list', label: 'List' }
-  ]
-}
+const separator = { type: 'separator', label: 'separator' }
 
-const text = {
-  tag: 'text',
-  items: [
-    { type: 'bold', label: 'Bold' },
-    { type: 'separator' },
-    { type: 'italic', label: 'Italic' },
-    { type: 'separator' },
-    { type: 'strike', label: 'Strike' },
-    { type: 'separator' },
-    { type: 'underline', label: 'Underline' },
-    { type: 'separator' },
-    { type: 'link', label: 'Link' },
-    { type: 'separator' },
-    { type: 'image', label: 'Image' }
-  ]
-}
+const bold      = { type: 'button', label: 'bold' }
+const italic    = { type: 'button', label: 'italic' }
+const strike    = { type: 'button', label: 'strike' }
+const underline = { type: 'button', label: 'underline' }
+const link      = { type: 'button', label: 'link' }
+const image     = { type: 'button', label: 'image' }
+const bullet    = { type: 'button', label: 'bullet' }
+const list      = { type: 'button', label: 'list' }
 
-const colors = {
-  tag: 'colors',
-  items: [
-    {
-      type: 'color', // content of `option` tag is empty
-      options: defaultColors
-    },
-    { type: 'separator' },
-    {
-      type: 'background', // content of `option` tag is empty
-      options: defaultColors
-    }
-  ]
-}
+const color      = { type: 'select', label: 'color', options: defaultColors }
+const background = { type: 'select', label: 'background', options: defaultColors }
 
-const align = {
-  label: 'align',
-  type: 'select',
+const align = { type: 'select', label: 'align',
   options: [
     { value:'justify' },
     { value:'center' },
@@ -69,66 +40,37 @@ const align = {
   ]
 }
 
-const font = {
-  label: 'font',
-  type: 'select',
+const font = { type: 'select', label: 'font',
   options: [
-    { label:'Sans Serif',  value:'sans-serif' },
-    { label:'Serif',       value:'serif' },
-    { label:'Monospace',   value:'monospace' }
+    { name:'Sans Serif',  value:'sans-serif' },
+    { name:'Serif',       value:'serif' },
+    { name:'Monospace',   value:'monospace' }
   ]
 }
 
-const size = {
-  label: 'size',
-  type: 'select',
+const size = { type: 'select', label: 'size',
   options: [
-    { label:'Small', value:'14px' },
-    { label:'Normal',  value:'16px' },
-    { label:'Large',  value:'18px' },
-    { label:'Huge',    value:'32px' }
-  ]
-}
-
-const formats = {
-  tag: 'formats',
-  items: [
-    {
-      type:'align', // content of `option` tag is empty
-      options: [
-        { label:'', value:'justify' },
-        { label:'',  value:'center' },
-        { label:'',    value:'left' },
-        { label:'',   value:'right' }
-      ]
-    },
-    { type: 'separator' },
-    {
-      type:'font',
-      options: [
-        { label:'Sans Serif',  value:'sans-serif' },
-        { label:'Serif',       value:'serif' },
-        { label:'Monospace',   value:'monospace' }
-      ]
-    },
-    { type: 'separator' },
-    {
-      type:'size',
-      options: [
-        { label:'Small', value:'14px' },
-        { label:'Normal',  value:'16px' },
-        { label:'Large',  value:'18px' },
-        { label:'Huge',    value:'32px' }
-      ]
-    }
+    { name:'Small',   value:'14px' },
+    { name:'Normal',  value:'16px' },
+    { name:'Large',   value:'18px' },
+    { name:'Huge',    value:'32px' }
   ]
 }
 
 const configs = [
-  text,
-  colors,
-  blocks,
-  formats
+  font      , separator,
+  size      , separator,
+  align     , separator,
+  bold      , separator,
+  italic    , separator,
+  strike    , separator,
+  underline , separator,
+  link      , separator,
+  image     , separator,
+  bullet    , separator,
+  list      , separator,
+  color     , separator,
+  background
 ]
 
 export default configs

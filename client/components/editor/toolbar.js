@@ -9,15 +9,14 @@ export default class toolbar extends React.Component {
 
   constructor(props) {
     super(props)
-    this.renderGroup = this.renderGroup.bind(this)
-    this.renderSeparator = this.renderSeparator.bind(this)
-    this.renderSelect = this.renderSelect.bind(this)
     this.renderSwitch = this.renderSwitch.bind(this)
     this.renderButton = this.renderButton.bind(this)
+    this.renderSelect = this.renderSelect.bind(this)
+    this.renderSeparator = this.renderSeparator.bind(this)
   }
 
   componentWillUpdate(nextProps, nextState) {
-    // console.log(this.props.configs[0].items[0].options[0])
+    // console.log(this.props.configs[0].options[0].options[0])
   }
 
   render() {
@@ -31,57 +30,29 @@ export default class toolbar extends React.Component {
   }
 
   renderSwitch(config, index) {
-    switch (config.tag) {
-      case 'text':
-        return this.renderButton(config, index)
-      case 'blocks':
+    switch (config.type) {
+      case 'select':
+        return this.renderSelect(config, index)
+      case 'button':
         return this.renderButton(config, index)
       default:
-        return this.renderGroup(config, index)
+        return this.renderSeparator(config, index)
     }
   }
 
   renderButton(config, index) {
     return (
-      <span className='ql-format-group' key={index || config.tag}>
-        {
-          config.items.map( (item, index) => {
-            if (item.type !== 'separator') {
-              return (
-                <span key={index || item.label} className={`ql-format-button ql-${item.type}`}></span>
-              )
-            } else {
-              return this.renderSeparator()
-            }
-          })
-        }
-      </span>
+      <span key={parseInt(index) || config.label} className={`ql-format-button ql-${config.label}`}></span>
     )
   }
 
-  renderGroup(config, index) {
+  renderSelect(config, index) {
     return (
-      <span className='ql-format-group' key={index || config.tag}>
+      <select className={`ql-${config.label}`} key={parseInt(index) || config.label}>
         {
-          config.items.map( (item, index) => {
-            if (item.type !== 'separator') {
-              return this.renderSelect(item)
-            } else {
-              return this.renderSeparator()
-            }
-          })
-        }
-      </span>
-    )
-  }
-
-  renderSelect(item, index) {
-    return (
-      <select className={`ql-${item.type}`} key={index || item.type}>
-        {
-          item.options.map((option, index) => {
+          config.options.map((option, index) => {
             return (
-              <option key={index} value={option.value}>{option.label}</option>
+              <option key={parseInt(index) || option.value} value={option.value}>{option.name}</option>
             )
           })
         }
@@ -89,9 +60,9 @@ export default class toolbar extends React.Component {
     )
   }
 
-  renderSeparator() {
+  renderSeparator(config, index) {
     return (
-      <span className='ql-format-separator'></span>
+      <span key={parseInt(index)} className='ql-format-separator'></span>
     )
   }
 }
