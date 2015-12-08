@@ -14,11 +14,12 @@ const colorsArray = [
 ]
 
 const defaultColors = colorsArray.map( color => {
-  return { value: color }
+  return { label: '', value: color }
 })
 
 const defaultItems = [
-  { label:'Formats',
+  {
+    label:'Formats',
     type:'group',
     items: [
     {
