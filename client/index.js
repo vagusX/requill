@@ -1,7 +1,5 @@
-import Button from 'button'
-import Slogan from 'slogan'
+import Editor from 'editor'
 
 export default {
-  Button,
-  Slogan
+  Editor
 }

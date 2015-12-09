@@ -50,27 +50,27 @@ const font = { type: 'select', label: 'font',
 
 const size = { type: 'select', label: 'size',
   options: [
-    { name:'Small',   value:'14px' },
-    { name:'Normal',  value:'16px' },
-    { name:'Large',   value:'18px' },
+    { name:'Normal',   value:'14px' },
+    { name:'Large',  value:'16px' },
+    { name:'Larger',   value:'18px' },
     { name:'Huge',    value:'32px' }
   ]
 }
 
 const configs = [
-  font      , separator,
-  size      , separator,
-  align     , separator,
   bold      , separator,
   italic    , separator,
   strike    , separator,
   underline , separator,
-  link      , separator,
-  image     , separator,
+  align     , separator,
   bullet    , separator,
   list      , separator,
   color     , separator,
-  background
+  background, separator,
+  link      , separator,
+  image     , separator,
+  size      , separator,
+  font
 ]
 
 export default configs

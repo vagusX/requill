@@ -15,16 +15,13 @@ export default class toolbar extends React.Component {
     this.renderSeparator = this.renderSeparator.bind(this)
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    // console.log(this.props.configs[0].options[0].options[0])
-  }
-
   render() {
     return (
       <div id={this.props.id} className={`${this.props.className} ql-snow`}>
         {
           this.props.configs.map( (config, index) => this.renderSwitch(config, index) )
         }
+        { this.props.children }
       </div>
     )
   }

@@ -6,6 +6,8 @@ import configs from './config'
 
 import 'quill/dist/quill.snow.css'
 
+import styles from './editor.css'
+
 export default class Editor extends React.Component {
   static propTypes = {
     name: React.PropTypes.string,
@@ -21,6 +23,9 @@ export default class Editor extends React.Component {
     this.counter = this.counter.bind(this)
     this.destroy = this.destroy.bind(this)
     this.custom = this.custom.bind(this)
+    this.deleteBlank = this.deleteBlank.bind(this)
+    this.handlePaste = this.handlePaste.bind(this)
+    this.logHTML = this.logHTML.bind(this)
   }
 
   componentDidMount() {
@@ -47,26 +52,58 @@ export default class Editor extends React.Component {
     this.editor.addModule('counter', {
       container: '#counter'
     })
+
+    this.editorEL = ReactDOM.findDOMNode(this.refs.editor)
+    this.editorEL.addEventListener('paste', this.handlePaste, false)
   }
 
   componentWillUnmount() {
+    this.editorEL.removeEventListener('paste', this.handlePaste, false)
     this.destroy()
   }
 
   render() {
     return (
       <div className='ql-container'>
-        <div>
+        <div className={styles.custom}>
           <button onClick={this.handleClick}>Get Selection</button>
           <button onClick={this.destroy}>destroy</button>
           <button onClick={this.custom}>custom</button>
+          <button onClick={this.logHTML}>getHTML</button>
           <button>{this.state.counter}</button>
           <button id='counter'>0</button>
         </div>
-        <Toolbar id='toolbar' className='ql-toolbar' configs={configs} />
-        <div id='editor' className='ql-container'>12345123999123321123</div>
+        <Toolbar id='toolbar' className={`${styles.toolbar} ql-toolbar`} configs={configs}>
+          <button onClick={this.deleteBlank}>去空格</button>
+        </Toolbar>
+        <div ref='editor' id='editor' className='ql-container'>我是一个文本编辑器</div>
       </div>
     )
+  }
+
+  logHTML() {
+    const html = this.editor.getHTML()
+    console.log(html)
+  }
+
+  handlePaste(e) {
+    const items = e.clipboardData.items
+    const range = this.getRange()
+    for (let i = 0; i < items.length; ++i) {
+      if (items[i].kind === 'file' && items[i].type.indexOf('image/') !== -1 ) {
+        let blob = items[i].getAsFile()
+        let blobUrl = window.URL.createObjectURL(blob)
+        this.editor.insertEmbed(range.start, 'image', blobUrl)
+      }
+    }
+    return false
+  }
+
+  deleteBlank() {
+    this.editor.focus()
+    const html = this.editor.getHTML()
+    const newHtml = html.replace(/\<div\>\<br\>\<\/div\>/g, '').replace(/\s/g, '')
+    this.editor.setHTML(newHtml)
   }
 
   custom() {
@@ -99,6 +136,7 @@ export default class Editor extends React.Component {
     this.editor.focus()
     let range = this.editor.getSelection()
     console.log(range)
+    return range
   }
 }
 
